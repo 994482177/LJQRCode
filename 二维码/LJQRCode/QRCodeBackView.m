@@ -30,6 +30,18 @@
     CGRect rect=CGRectMake((self.bounds.size.width-scanSize.width)/2, (self.bounds.size.height-scanSize.height)/2, scanSize.width, scanSize.height);
     
     
+    UIView* borderView=[self viewWithTag:120];
+    if (borderView==nil)
+    {
+        borderView=[[UIView alloc]initWithFrame:rect];
+        borderView.tag=120;
+        borderView.backgroundColor=[UIColor clearColor];
+        borderView.layer.borderWidth=0.5;
+        borderView.layer.borderColor=[UIColor whiteColor].CGColor;
+        [self addSubview:borderView];
+    }
+    borderView.frame=rect;
+    
     //扫描范围
     if (self.boxView==nil)
     {
@@ -49,7 +61,7 @@
             cornImageView.image=[UIImage imageNamed:imageName];
             [self.boxView addSubview:cornImageView];
         }
-        CGRect imageRect=CGRectMake(i%2*(CGRectGetWidth(_boxView.frame)-15), (int)[@(i/2) boolValue] *(CGRectGetHeight(_boxView.frame)-15), 15, 15);
+        CGRect imageRect=CGRectMake(i%2*(CGRectGetWidth(_boxView.frame)-12)-2, (int)[@(i/2) boolValue] *(CGRectGetHeight(_boxView.frame)-11)-2, 15, 15);
         cornImageView.frame=imageRect;
     }
     
