@@ -1,8 +1,7 @@
 # LJQRCode
 一个非常简单的二维码扫描。
 
-     QRView* view=[QRView getQRViewWithFrame:self.view.bounds result:^(NSString* result)
-    {
+     QRView* view=[QRView getQRViewWithFrame:self.view.bounds result:^(NSString* result){
         NSLog(@"%@", result);
     }];
     [view startScan];
