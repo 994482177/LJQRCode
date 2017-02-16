@@ -11,6 +11,8 @@
 
 @interface ViewController ()
 
+@property(nonatomic, strong)QRView* contentQRView;
+
 @end
 
 @implementation ViewController
@@ -20,23 +22,30 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
     
-    
-    __block QRView* view=nil;
-    view=[QRView getQRViewWithFrame:self.view.bounds result:^(id result)
-    {
+    __weak typeof(self) tempWeakSelf=self;
+    self.contentQRView = [QRView setQRCodeToViewController:self result:^(id result) {
         NSLog(@"%@", result);
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2*NSEC_PER_SEC)), dispatch_get_main_queue(), ^
-                       {
-                           [view startScan];
-                       });
+        [tempWeakSelf restartScan];
     }];
     
     //两个可选属性：
-    view.QRScanSize=CGSizeMake(200, 200);
-    view.QRBackgroundColor=[[UIColor orangeColor]colorWithAlphaComponent:0.8];
+    self.contentQRView.QRScanSize=CGSizeMake(300, 200);
+    self.contentQRView.QRBackgroundColor=[[UIColor orangeColor]colorWithAlphaComponent:0.3];
+//    self.contentQRView.QRBackgroundColor = [[UIColor colorWithPatternImage:[UIImage imageNamed:@"logo"]]colorWithAlphaComponent:0.3];
     
-    [view startScan];
-    [self.view addSubview:view];
+    
+    [self.contentQRView startScan];
+    
+}
+
+-(void)restartScan{
+    
+}
+- (IBAction)flashClick:(UIBarButtonItem *)sender {
+    [self.contentQRView openFlash];
+}
+- (IBAction)albumClick:(UIBarButtonItem *)sender {
+    [self.contentQRView openSystemAlbum];
 }
 
 
