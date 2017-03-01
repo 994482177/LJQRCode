@@ -45,8 +45,8 @@
 
 
 - (IBAction)colorClick:(id)sender {
-    UIColor* imageColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"button"]];
-    UIColor* qrColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"head.jpg"]];
+    UIColor* imageColor = [UIColor cyanColor];
+    UIColor* qrColor = [UIColor redColor];
     
     UIImage* QRcodeImage = [LJCreateQRCode createColorQRImageFromString:self.contenTextView.text bgColor:imageColor QRColor:qrColor imageWidth:self.imageWidth];
     self.contentImageView.image = QRcodeImage;
