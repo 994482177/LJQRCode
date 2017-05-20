@@ -129,11 +129,106 @@
     [color_filter setValue:[CIColor colorWithCGColor:QRColor.CGColor] forKey:@"inputColor0"];
     [color_filter setValue:[CIColor colorWithCGColor:cgBgColor] forKey:@"inputColor1"];
     
+    CGColorRelease(cgBgColor);
+    //CGColorSpaceRelease(space);
+    
     // 7、设置输出
     CIImage *colorImage = [color_filter outputImage];
-    UIImage *resultIamge = [UIImage imageWithCIImage:colorImage];
+    
+    CGRect qrRect = [colorImage extent];
+    CIContext *context = [CIContext contextWithOptions:nil];
+    CGImageRef cgImage = [context createCGImage:colorImage fromRect:qrRect];
+    UIImage *resultIamge = [UIImage imageWithCGImage:cgImage];
+    CGImageRelease(cgImage);
+    
+    
+    UIImage* deviceImage = [UIImage imageNamed:@"device"];
+    
+    UIGraphicsBeginImageContext(CGSizeMake(1000, 1000));
+    //UIGraphicsBeginImageContextWithOptions(CGSizeMake(1000, 1000), YES, 0);
+    
+    CGContextRef cgContext = UIGraphicsGetCurrentContext();
+    context = [CIContext contextWithCGContext:cgContext options:nil];
+    
+    CIImage* deviceCIImage = [CIImage imageWithCGImage:deviceImage.CGImage];
+    
+    [context drawImage:deviceCIImage inRect:CGRectMake(0, 0, 1000, 1000) fromRect:[deviceCIImage extent]];
+    [context drawImage:[CIImage imageWithCGImage:resultIamge.CGImage] inRect:CGRectMake(200, 200, 600, 600) fromRect:qrRect];
+    
+    resultIamge = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    
+    
+    resultIamge = [self originImage:resultIamge toTransparentWithColor:nil];
     return resultIamge;
 }
+
+/**  将subColor 替换成透明 */
++(UIImage*)originImage:(UIImage*)image toTransparentWithColor:(UIColor*)subColor{
+    // 分配内存
+    const int imageWidth = image.size.width;
+    const int imageHeight = image.size.height;
+    
+    size_t bytesPerRow = imageWidth * 4;
+    uint32_t* rgbImageBuf = (uint32_t*)malloc(bytesPerRow * imageHeight);
+    
+    // 创建context
+    CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
+    CGContextRef context = CGBitmapContextCreate(rgbImageBuf, imageWidth, imageHeight, 8, bytesPerRow, colorSpace,
+                                                 kCGBitmapByteOrder32Little | kCGImageAlphaNoneSkipLast);
+    CGContextDrawImage(context, CGRectMake(0, 0, imageWidth, imageHeight), image.CGImage);
+    
+    // 遍历像素
+    int pixelNum = imageWidth * imageHeight;
+    uint32_t* pCurPtr = rgbImageBuf;
+    
+    for (int i = 0; i < pixelNum; i++, pCurPtr++){
+        
+        //        //去除白色...将0xFFFFFF00换成其它颜色也可以替换其他颜色。
+        //        if ((*pCurPtr & 0xFFFFFF00) >= 0xffffff00) {
+        //
+        //            uint8_t* ptr = (uint8_t*)pCurPtr;
+        //            ptr[0] = 0;
+        //        }
+        
+        //接近白色
+        //将像素点转成子节数组来表示---第一个表示透明度即ARGB这种表示方式。ptr[0]:透明度,ptr[1]:R,ptr[2]:G,ptr[3]:B
+        //分别取出RGB值后。进行判断需不需要设成透明。
+        
+        uint8_t* ptr = (uint8_t*)pCurPtr;
+        
+//        if (ptr[1] > 240 && ptr[2] > 240 && ptr[3] > 240) {
+        if (ptr[1] <10 && ptr[2] <10 && ptr[3] <10) {
+            
+            //当RGB值都大于240则比较接近白色的都将透明度设为0.-----即接近白色的都设置为透明。某些白色背景具有杂质就会去不干净，用这个方法可以去干净
+            ptr[0] = 0;
+        }
+    }
+    
+    // 将内存转成image
+    CGDataProviderRef dataProvider =CGDataProviderCreateWithData(NULL, rgbImageBuf, bytesPerRow * imageHeight, nil);
+    
+    CGImageRef imageRef = CGImageCreate(imageWidth, imageHeight,8, 32, bytesPerRow, colorSpace,
+                                        kCGImageAlphaLast |kCGBitmapByteOrder32Little, dataProvider,
+                                        NULL, true,kCGRenderingIntentDefault);
+    
+    CGDataProviderRelease(dataProvider);
+    UIImage* resultUIImage = [UIImage imageWithCGImage:imageRef];
+    
+    // 释放
+    CGImageRelease(imageRef);
+    CGContextRelease(context);
+    CGColorSpaceRelease(colorSpace);
+    
+    return resultUIImage;
+}
+
+
+
+
+
+
+
 
 /**  生成一张 带有logo的彩色 二维码 */
 +(UIImage*)createLogoAndColorQRImageFromString:(NSString*)dataStr logoImage:(UIImage*)logoImage bgColor:(UIColor*)bgColor QRColor:(UIColor *)QRColor imageWidth:(CGFloat)width{
@@ -214,6 +309,8 @@
     size_t height = CGRectGetHeight(extent) * scale;
     CGColorSpaceRef cs = CGColorSpaceCreateDeviceGray();
     CGContextRef bitmapRef = CGBitmapContextCreate(nil, width, height, 8, 0, cs, (CGBitmapInfo)kCGImageAlphaNone);
+    CGColorSpaceRelease(cs);
+    
     CIContext *context = [CIContext contextWithOptions:nil];
     CGImageRef bitmapImage = [context createCGImage:image fromRect:extent];
     CGContextSetInterpolationQuality(bitmapRef, kCGInterpolationNone);
@@ -224,7 +321,10 @@
     CGImageRef scaledImage = CGBitmapContextCreateImage(bitmapRef);
     CGContextRelease(bitmapRef);
     CGImageRelease(bitmapImage);
-    return [UIImage imageWithCGImage:scaledImage];
+    UIImage* resultImage = [UIImage imageWithCGImage:scaledImage];
+    CGImageRelease(scaledImage);
+    
+    return resultImage;
 }
 
 @end
