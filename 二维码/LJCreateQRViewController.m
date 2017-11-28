@@ -16,8 +16,18 @@
 @interface LJCreateQRViewController ()
 @property (weak, nonatomic) IBOutlet UITextView *contenTextView;
 @property (weak, nonatomic) IBOutlet UIImageView *contentImageView;
+@property (weak, nonatomic) IBOutlet UIImageView *backImageView;
+@property (nonatomic, strong)UIImage* tempImage;
 
 @property (nonatomic, assign)CGFloat imageWidth;
+
+@property (nonatomic, assign)BOOL isBack;
+@property (nonatomic, assign)NSInteger red;
+@property (nonatomic, assign)NSInteger green;
+@property (nonatomic, assign)NSInteger blue;
+@property (nonatomic, assign)CGFloat   alpha;
+
+
 
 @end
 
@@ -29,8 +39,63 @@
     
     
     self.imageWidth = self.contentImageView.bounds.size.width;
+    
+    self.red = 50;
+    self.green = 50;
+    self.blue = 50;
+    self.alpha = 1;
+    [self setBackColor];
 }
 
+#pragma mark - ================ 颜色Slide ==================
+
+- (IBAction)redSlider:(UISlider *)sender {
+    self.red = sender.value;
+    [self setBackColor];
+}
+
+- (IBAction)greenSlider:(UISlider *)sender {
+    self.green = sender.value;
+    [self setBackColor];
+}
+
+- (IBAction)blueSlider:(UISlider *)sender {
+    self.blue = sender.value;
+    [self setBackColor];
+}
+
+- (IBAction)alphaSlider:(UISlider *)sender {
+    self.alpha = sender.value;
+    [self setBackColor];
+}
+
+-(void)setBackColor{
+    
+    UIColor* color = kRGBColor(self.red, self.green, self.blue, self.alpha);
+    if (self.isBack) {
+        self.backImageView.backgroundColor = color;
+    }else{
+        UIImage* image = [LJImageTools getImageForColor:color size:CGSizeMake(200, 200)];
+        self.contentImageView.image = image;
+        self.tempImage = image;
+    }
+}
+
+- (IBAction)changeView:(UIBarButtonItem *)sender {
+    self.isBack = !self.isBack;
+    if (self.isBack) {
+        sender.tintColor = [UIColor blackColor];
+        
+    }else{
+        sender.tintColor = [UIColor redColor];
+    }
+}
+
+-(void)touchesEnded:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event{
+    [self.view endEditing:YES];
+}
+
+#pragma mark - ================ 二维码样式 ==================
 - (IBAction)createClick:(id)sender {
     UIImage* QRcodeImage = [LJCreateQRCode createGenerateQRImageFromString:self.contenTextView.text imageWidth:self.imageWidth];
     self.contentImageView.image = QRcodeImage;
@@ -47,8 +112,11 @@
     UIColor* imageColor = [UIColor blackColor];
     UIColor* qrColor = [UIColor redColor];
     
-    UIImage* bgImge = [UIImage imageNamed:@"logo"];
-    self.contentImageView.image = bgImge;
+    //UIImage* bgImge = [UIImage imageNamed:@"greenCenter"];
+    self.contentImageView.image = self.tempImage;
+//    self.backImageView.image = bgImge;
+    //self.backImageView.backgroundColor = [UIColor clearColor];
+    
     
     UIImage* QRcodeImage = [LJCreateQRCode createColorQRImageFromString:self.contenTextView.text
                                                                 bgColor:imageColor
@@ -57,7 +125,7 @@
     
     CALayer* maskLayer=[CALayer layer];
     maskLayer.contents=(id)QRcodeImage.CGImage;
-    maskLayer.bounds=self.contentImageView.bounds;
+    maskLayer.bounds=CGRectMake(0, 0, 425, 425);
     
     maskLayer.position = CGPointMake(self.contentImageView.bounds.size.width/2.0, self.contentImageView.bounds.size.height/2.0);
     maskLayer.masksToBounds=NO;
