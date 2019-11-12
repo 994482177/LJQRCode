@@ -376,7 +376,7 @@
 				TargetAttributes = {
 					9174A5E51B3B96CA0067E7C1 = {
 						CreatedOnToolsVersion = 6.3.2;
-						DevelopmentTeam = KKHXU36BGT;
+						DevelopmentTeam = 74MC75RT69;
 					};
 					9174A5FE1B3B96CA0067E7C1 = {
 						CreatedOnToolsVersion = 6.3.2;
@@ -389,8 +389,10 @@
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
+				English,
 				en,
 				Base,
+				"zh-Hans",
 			);
 			mainGroup = 9174A5DD1B3B96CA0067E7C1;
 			productRefGroup = 9174A5E71B3B96CA0067E7C1 /* Products */;
@@ -586,13 +588,13 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = KKHXU36BGT;
+				DEVELOPMENT_TEAM = 74MC75RT69;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/二维码/LJTools",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "/Users/renjinkui/Desktop/GitHub/LJQRCode/二维码/LJTools/PrefixHeader.pch";
+				GCC_PREFIX_HEADER = "$(SRCROOT)/二维码/LJTools/PrefixHeader.pch";
 				INFOPLIST_FILE = "二维码/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -604,13 +606,13 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = KKHXU36BGT;
+				DEVELOPMENT_TEAM = 74MC75RT69;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/二维码/LJTools",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "/Users/renjinkui/Desktop/GitHub/LJQRCode/二维码/LJTools/PrefixHeader.pch";
+				GCC_PREFIX_HEADER = "$(SRCROOT)/二维码/LJTools/PrefixHeader.pch";
 				INFOPLIST_FILE = "二维码/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
