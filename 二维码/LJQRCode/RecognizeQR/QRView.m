@@ -78,11 +78,17 @@
     self.backView.scanSize=_QRScanSize;
     
     //设置扫描范围
-    CGFloat width=_QRScanSize.width/CGRectGetWidth(self.frame);
-    CGFloat height=_QRScanSize.height/CGRectGetHeight(self.frame);
-    if (self.captureOutput!=nil){
-        [self.captureOutput setRectOfInterest:CGRectMake((1-height)/2, (1-width)/2, height, width)];
+    if (self.videoPreviewLayer) {
+        [self.videoPreviewLayer setFrame:CGRectMake((CGRectGetWidth(self.frame)-self.QRScanSize.width)/2.0,
+                                                    (CGRectGetHeight(self.frame)-self.QRScanSize.height)/2.0,
+                                                    self.QRScanSize.width, self.QRScanSize.height)];
     }
+//    CGFloat width=_QRScanSize.width/CGRectGetWidth(self.frame);
+//    CGFloat height=_QRScanSize.height/CGRectGetHeight(self.frame);
+//    if (self.captureOutput!=nil){
+//        [self.captureOutput setRectOfInterest:CGRectMake(0, 0, 1, 1)];
+//    }
+    
 }
 
 
@@ -107,20 +113,29 @@
         [self.captureSession addOutput:self.captureOutput];
         
         //设置默认扫描范围
-        CGFloat width=self.QRScanSize.width/CGRectGetWidth(self.frame);
-        CGFloat height=self.QRScanSize.height/CGRectGetHeight(self.frame);
-        [self.captureOutput setRectOfInterest:CGRectMake((1-height)/2, (1-width)/2, height, width)];
-        self.captureOutput.metadataObjectTypes=@[AVMetadataObjectTypeQRCode];
+//        CGFloat width=self.QRScanSize.width/CGRectGetWidth(self.frame);
+//        CGFloat height=self.QRScanSize.height/CGRectGetHeight(self.frame);
+//        [self.captureOutput setRectOfInterest:CGRectMake(0, 0, 1, 1)];
+        
+        self.captureOutput.metadataObjectTypes=@[AVMetadataObjectTypeDataMatrixCode, AVMetadataObjectTypeQRCode];
+//        self.captureOutput.metadataObjectTypes=@[AVMetadataObjectTypeQRCode];
         
         //创建一个队列
         dispatch_queue_t dispatchQueue=dispatch_queue_create("myQueue", NULL);
         [self.captureOutput setMetadataObjectsDelegate:self queue:dispatchQueue];
-        [self.captureOutput setMetadataObjectTypes:[NSArray arrayWithObject:AVMetadataObjectTypeQRCode]];
+        
+//        [self.captureOutput setMetadataObjectTypes:[NSArray arrayWithObject:AVMetadataObjectTypeDataMatrixCode]];
+//        [self.captureOutput setMetadataObjectTypes:[NSArray arrayWithObject:AVMetadataObjectTypeQRCode]];
         
         //显示相机捕获的场景
         self.videoPreviewLayer=[[AVCaptureVideoPreviewLayer alloc]initWithSession:self.captureSession];
         [self.videoPreviewLayer setVideoGravity:AVLayerVideoGravityResizeAspectFill];
-        [self.videoPreviewLayer setFrame:self.layer.frame];
+//        [self.videoPreviewLayer setFrame:self.layer.frame];
+        
+        [self.videoPreviewLayer setFrame:CGRectMake((CGRectGetWidth(self.frame)-self.QRScanSize.width)/2.0,
+        (CGRectGetHeight(self.frame)-self.QRScanSize.height)/2.0,
+        self.QRScanSize.width, self.QRScanSize.height)];
+        
         [self.layer addSublayer:self.videoPreviewLayer];
         
         //设置背景
@@ -135,7 +150,8 @@
     if (metadataObjects!=nil && [metadataObjects count]>0){
         
         AVMetadataMachineReadableCodeObject* metadataObject=[metadataObjects objectAtIndex:0];
-        if ([[metadataObject type]isEqualToString:AVMetadataObjectTypeQRCode]){
+        if ([[metadataObject type]isEqualToString:AVMetadataObjectTypeQRCode] ||
+            [[metadataObject type]isEqualToString:AVMetadataObjectTypeDataMatrixCode]){
             
             NSString* resultStr=metadataObject.stringValue;
             [self stopScan];

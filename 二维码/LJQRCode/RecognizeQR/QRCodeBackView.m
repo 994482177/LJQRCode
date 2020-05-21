@@ -27,7 +27,7 @@
     _scanSize=scanSize;
     
     //透明的扫描范围
-    CGRect rect=CGRectMake((self.bounds.size.width-scanSize.width)/2, (self.bounds.size.height-scanSize.height)/2, scanSize.width, scanSize.height);
+    CGRect rect=CGRectMake((self.bounds.size.width-scanSize.width)/2.0, (self.bounds.size.height-scanSize.height)/2, scanSize.width, scanSize.height);
     
     
     UIView* borderView=[self viewWithTag:120];
@@ -122,7 +122,7 @@
 -(void)drawClearnBox
 {
     //透明的扫描范围
-    CGRect rect=CGRectMake((self.bounds.size.width-_scanSize.width)/2, (self.bounds.size.height-_scanSize.height)/2, _scanSize.width, _scanSize.height);
+    CGRect rect=CGRectMake((self.bounds.size.width-_scanSize.width)/2.0, (self.bounds.size.height-_scanSize.height)/2, _scanSize.width, _scanSize.height);
     
     UIRectFill(rect);
     UIRectFillUsingBlendMode(rect, kCGBlendModeClear);

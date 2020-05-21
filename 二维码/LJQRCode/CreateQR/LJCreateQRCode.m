@@ -33,7 +33,13 @@
     //放大图片 到像素点的三倍
     outputImage = [outputImage imageByApplyingTransform:CGAffineTransformMakeScale(width/23*3, width/23*3)];
     
-    return [UIImage imageWithCIImage:outputImage];
+    CGRect qrRect = [outputImage extent];
+    CIContext *context = [CIContext contextWithOptions:nil];
+    CGImageRef cgImage = [context createCGImage: outputImage fromRect:qrRect];
+    UIImage *resultIamge = [UIImage imageWithCGImage:cgImage];
+    
+    
+    return resultIamge;
 }
 
 /**  生成一张 中间 带有logo的 二维码*/

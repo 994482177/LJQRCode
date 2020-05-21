@@ -20,31 +20,25 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    // Do any additional setup after loading the view, typically from a nib.
     
     __weak typeof(self) tempWeakSelf=self;
     self.contentQRView = [QRView setQRCodeToViewController:self result:^(id result) {
-        //NSLog(@"%@", result);
         dispatch_async(dispatch_get_main_queue(), ^{
             [tempWeakSelf restartScan:result];
         });
     }];
     
-    
-    
     //两个可选属性：
     self.contentQRView.QRScanSize=CGSizeMake(300, 200);
     self.contentQRView.QRBackgroundColor=[[UIColor orangeColor]colorWithAlphaComponent:0.3];
-//    self.contentQRView.QRBackgroundColor = [[UIColor colorWithPatternImage:[UIImage imageNamed:@"logo"]]colorWithAlphaComponent:0.3];
-    
-    
     [self.contentQRView startScan];
 }
 
 -(void)restartScan:(NSString*)result{
     [self.contentQRView stopScan];
     __weak typeof(self) tempWeakSelf=self;
-    [LJAlertView customAlertWithTitle:@"二维码" message:result delegate:self cancelButtonTitle:@"cancel" otherButtonTitles:@"commit" clickButton:^(NSInteger flag) {
+    [[UIPasteboard generalPasteboard] setString:result];
+    [LJAlertView customAlertWithTitle:@"二维码已拷贝" message:result delegate:self cancelButtonTitle:@"cancel" otherButtonTitles:@"copy" clickButton:^(NSInteger flag) {
         [tempWeakSelf.contentQRView startScan];
     }];
 }

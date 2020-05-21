@@ -158,16 +158,7 @@
             [LJInfoAlert showInfo:@"保存失败" bgColor:nil];
         }
     }];
-    
 }
-
-
-
-
-
-
-
-
 
 
 
