@@ -33,6 +33,8 @@
 		2A2402261E2762FC00FF54F0 /* QRWhiteLine@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2A24021E1E2762FC00FF54F0 /* QRWhiteLine@2x.png */; };
 		2A2402291E27637900FF54F0 /* LJCreateQRCode.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A2402281E27637900FF54F0 /* LJCreateQRCode.m */; };
 		2A24022C1E276BE000FF54F0 /* LJCreateQRViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A24022B1E276BE000FF54F0 /* LJCreateQRViewController.m */; };
+		6A637D0B247E4C5B00F9DE27 /* ScreenImage in Resources */ = {isa = PBXBuildFile; fileRef = 6A637D0A247E4C5A00F9DE27 /* ScreenImage */; };
+		6AE3EC6D247F490A008BB6A2 /* SetScreenViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6AE3EC6C247F490A008BB6A2 /* SetScreenViewController.m */; };
 		9174A5EC1B3B96CA0067E7C1 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 9174A5EB1B3B96CA0067E7C1 /* main.m */; };
 		9174A5EF1B3B96CA0067E7C1 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 9174A5EE1B3B96CA0067E7C1 /* AppDelegate.m */; };
 		9174A5F21B3B96CA0067E7C1 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9174A5F11B3B96CA0067E7C1 /* ViewController.m */; };
@@ -115,6 +117,9 @@
 		2A2402281E27637900FF54F0 /* LJCreateQRCode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LJCreateQRCode.m; sourceTree = "<group>"; };
 		2A24022A1E276BE000FF54F0 /* LJCreateQRViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LJCreateQRViewController.h; sourceTree = "<group>"; };
 		2A24022B1E276BE000FF54F0 /* LJCreateQRViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LJCreateQRViewController.m; sourceTree = "<group>"; };
+		6A637D0A247E4C5A00F9DE27 /* ScreenImage */ = {isa = PBXFileReference; lastKnownFileType = folder; path = ScreenImage; sourceTree = "<group>"; };
+		6AE3EC6B247F490A008BB6A2 /* SetScreenViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SetScreenViewController.h; sourceTree = "<group>"; };
+		6AE3EC6C247F490A008BB6A2 /* SetScreenViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SetScreenViewController.m; sourceTree = "<group>"; };
 		9174A5E61B3B96CA0067E7C1 /* 二维码.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "二维码.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		9174A5EA1B3B96CA0067E7C1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		9174A5EB1B3B96CA0067E7C1 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -290,6 +295,9 @@
 				2A21D3231EC1E1B00043B625 /* LJTools */,
 				9174A5F01B3B96CA0067E7C1 /* ViewController.h */,
 				9174A5F11B3B96CA0067E7C1 /* ViewController.m */,
+				6AE3EC6B247F490A008BB6A2 /* SetScreenViewController.h */,
+				6AE3EC6C247F490A008BB6A2 /* SetScreenViewController.m */,
+				6A637D0A247E4C5A00F9DE27 /* ScreenImage */,
 				2A24022A1E276BE000FF54F0 /* LJCreateQRViewController.h */,
 				2A24022B1E276BE000FF54F0 /* LJCreateQRViewController.m */,
 				9174A5F31B3B96CA0067E7C1 /* Main.storyboard */,
@@ -413,6 +421,7 @@
 				2A24021F1E2762FC00FF54F0 /* cor1.png in Resources */,
 				2A21D3541EC1E1B00043B625 /* mark.png in Resources */,
 				2A2402201E2762FC00FF54F0 /* cor2.png in Resources */,
+				6A637D0B247E4C5B00F9DE27 /* ScreenImage in Resources */,
 				2A2402211E2762FC00FF54F0 /* cor3.png in Resources */,
 				2A2402241E2762FC00FF54F0 /* QRGreenLine@2x.png in Resources */,
 				2A2402261E2762FC00FF54F0 /* QRWhiteLine@2x.png in Resources */,
@@ -442,6 +451,7 @@
 				2A21D35E1EC1E1B00043B625 /* LJImageTools.m in Sources */,
 				9174A5F21B3B96CA0067E7C1 /* ViewController.m in Sources */,
 				2A21D3661EC1E1B00043B625 /* RegularTools.m in Sources */,
+				6AE3EC6D247F490A008BB6A2 /* SetScreenViewController.m in Sources */,
 				2A21D3551EC1E1B00043B625 /* NSNotificationCenter+LJ.m in Sources */,
 				2A2402231E2762FC00FF54F0 /* QRCodeBackView.m in Sources */,
 				2A24022C1E276BE000FF54F0 /* LJCreateQRViewController.m in Sources */,
