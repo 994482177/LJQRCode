@@ -35,10 +35,17 @@
 }
 
 -(void)restartScan:(NSString*)result{
+    NSString* titleStr = @"二维码已拷贝";
+    if (!result) {
+        result = @"";
+        titleStr = @"不存在二维码";
+    }else{
+        [[UIPasteboard generalPasteboard] setString:result];
+    }
     [self.contentQRView stopScan];
     __weak typeof(self) tempWeakSelf=self;
-    [[UIPasteboard generalPasteboard] setString:result];
-    [LJAlertView customAlertWithTitle:@"二维码已拷贝" message:result delegate:self cancelButtonTitle:@"cancel" otherButtonTitles:@"copy" clickButton:^(NSInteger flag) {
+    
+    [LJAlertView customAlertWithTitle:titleStr message:result delegate:self cancelButtonTitle:nil otherButtonTitles:@"继续" clickButton:^(NSInteger flag) {
         [tempWeakSelf.contentQRView startScan];
     }];
 }
